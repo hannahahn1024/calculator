@@ -34,7 +34,7 @@ button {
   padding: 30px;
   margin: 10px;
   font-weight: bolder;
-  font-size: large;
+   font-size: large;
 }
 
 #calculatorOperator {
@@ -53,4 +53,18 @@ h1 {
   justify-content: center;
   background-color: rgb(62, 59, 59);
   padding: 20px;
+}
+
+#zeroButton {
+  padding: 30px 80px;
+  color: ugly;
+}
+
+#calculatorValue {
+  color:white;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin: 30px;
+  font-size: 70px;
 }

@@ -1,123 +1,146 @@
 import React from "react";
 import { useState } from "react";
-
+import { divide, add, subtract, multiply } from "./calculatorFunctions";
 
 function App() {
-
-  const [count, setCount] = useState(0)
-  const [temp, setTemp] = useState(0);
-  const [op, setOp] = useState("");
+  const [count, setCount] = useState(0); // State for the current count
+  const [temp, setTemp] = useState(0); // State for storing temporary values
+  const [op, setOp] = useState(""); // State for the current operation
 
   function percentOp() {
-    setCount(count / 100);
+    setCount(count / 100); // Calculate percentage of the current count
   }
-  
-  // Function to handle number button clicks
+
   function changeCount(value) {
-    setCount(count * 10 + value);
-  };
-
-  function negative() {
-    setCount(count * -1)
+    setCount(count * 10 + value); 
   }
 
-  function clear() {
-    setCount(0);
-    setTemp(0);
-    setOp("");
+  function negativeOp() {
+    setCount(count * -1); // Negate the current count
   }
 
-  // Addition function
-  let add = function (a, b) {
-    let sum = a + b;
-    console.log("a + b = ", sum);
-    return sum;
-  };
+  function clearOp() {
+    setCount(0); // Reset the count to 0
+    setTemp(0); // Reset the temporary value to 0
+    setOp(""); // Reset the current operation
+  }
 
-  // Subtraction function
-  let subtract = function (a, b) {
-    let difference = a - b;
-    console.log("a - b = ", difference);
-    return difference;
-  };
-
-  // Multiplication function
-  let multiply = function (a, b) {
-    let product = a * b;
-    console.log("a * b = ", product);
-    return product;
-  };
-
-  // Division function
-  let divide = function (a, b) {
-    let quotient = a / b;
-    console.log("a / b = ", quotient);
-    return quotient;
-  };
-
-  // Percentage function
-  let percent = function (a) {
-    let percentage = divide(a, 100);
-    console.log("percent", percentage);
-    return percent;
-  };
-
-  // Equal function
+  function equalOp() {
+    let result = 0;
+    switch (op) {
+      case "+": // Addition
+        result = add(temp, count); // Perform addition using the temp and count values
+        break;
+      case "-": // Subtraction
+        result = subtract(temp, count); // Perform subtraction using the temp and count values
+        break;
+      case "*": // Multiplication
+        result = multiply(temp, count); // Perform multiplication using the temp and count values
+        break;
+      case "/": // Division
+        result = divide(temp, count); // Perform division using the temp and count values
+        break;
+      default:
+        break;
+    }
+    setCount(result); // Update the count with the result
+    setTemp(0); // Reset the temporary value to 0
+    setOp(""); // Reset the current operation
+  }
 
   const debug = () => {
     console.log("count:" + count);
     console.log("op:" + op);
     console.log("temp:" + temp);
     console.log("-------------");
-  }
+  };
 
   return (
     <div className="App">
-      <h1 style=
-        {{
+      <h1
+        style={{
           color: "red",
           background: "orange",
-          textAlign: "center"
-        }}>
-          ✌️Hello 🤡Hannah 🧐James 👽Alejandro!
+          textAlign: "center",
+        }}
+      >
+        ✌️Hello 🤡Hannah 🧐James 👽Alejandro!
       </h1>
-      <button onClick={() => debug()}>
-        STATE STATUS
-      </button>
-        <div className="calculatorStyle">
-      <div className="calculatorBackground">
-        <span id="calculatorValue">{count}</span>
-      <div className="calculatorRow">
-        <button onClick={() => clear()}>C</button>
-        <button onClick={() => negative()}>+/-</button>
-        <button onClick={() => percentOp()}>%</button>
-        <button id="calculatorOperator" onClick={() => {setOp(4); setTemp(count)}}>÷</button>
-      </div>
-      <div className="calculatorRow">
-        <button onClick={() => changeCount(7)}>7</button>
-        <button onClick={() => changeCount(8)}>8</button>
-        <button onClick={() => changeCount(9)}>9</button>
-        <button id="calculatorOperator" onClick={() => {setOp(3); setTemp(count)}}>X</button>
-      </div>
-      <div className="calculatorRow">
-        <button onClick={() => changeCount(4)}>4</button>
-        <button onClick={() => changeCount(5)}>5</button>
-        <button onClick={() => changeCount(6)}>6</button>
-        <button id="calculatorOperator" onClick={() => {setOp(2); setTemp(count)}}>-</button>
-      </div>
-      <div className="calculatorRow">
-        <button onClick={() => changeCount(1)}>1</button>
-        <button onClick={() => changeCount(2)}>2</button>
-        <button onClick={() => changeCount(3)}>3</button>
-        <button id="calculatorOperator" onClick={() => {setOp(1); setTemp(count)}}>+</button>
-      </div>
-      <div className="calculatorRow">
-        <button id="zeroButton" onClick={() => changeCount(0)}>0</button>
-        <button>.</button>
-        <button id="calculatorOperator">=</button>
+      <button onClick={debug}>STATE STATUS</button>
+      <div className="calculatorStyle">
+        <div className="calculatorBackground">
+          <span id="calculatorValue">{count}</span>
+          <div className="calculatorRow">
+            <button onClick={clearOp}>C</button>
+            <button onClick={negativeOp}>+/-</button>
+            <button onClick={percentOp}>%</button>
+            <button
+              id="calculatorOperator"
+              onClick={() => {
+                setOp("/");
+                setTemp(count);
+                setCount(0); // Clear the current number after storing it in `temp`
+              }}
+            >
+              ÷
+            </button>
+          </div>
+          <div className="calculatorRow">
+            <button onClick={() => changeCount(7)}>7</button>
+            <button onClick={() => changeCount(8)}>8</button>
+            <button onClick={() => changeCount(9)}>9</button>
+            <button
+              id="calculatorOperator"
+              onClick={() => {
+                setOp("*");
+                setTemp(count);
+                setCount(0); // Clear the current number after storing it in `temp`
+              }}
+            >
+              X
+            </button>
+          </div>
+          <div className="calculatorRow">
+            <button onClick={() => changeCount(4)}>4</button>
+            <button onClick={() => changeCount(5)}>5</button>
+            <button onClick={() => changeCount(6)}>6</button>
+            <button
+              id="calculatorOperator"
+              onClick={() => {
+                setOp("-");
+                setTemp(count);
+                setCount(0); // Clear the current number after storing it in `temp`
+              }}
+            >
+              -
+            </button>
+          </div>
+          <div className="calculatorRow">
+            <button onClick={() => changeCount(1)}>1</button>
+            <button onClick={() => changeCount(2)}>2</button>
+            <button onClick={() => changeCount(3)}>3</button>
+            <button
+              id="calculatorOperator"
+              onClick={() => {
+                setOp("+");
+                setTemp(count);
+                setCount(0); // Clear the current number after storing it in `temp`
+              }}
+            >
+              +
+            </button>
+          </div>
+          <div className="calculatorRow">
+            <button id="zeroButton" onClick={() => changeCount(0)}>
+              0
+            </button>
+            <button>.</button>
+            <button id="calculatorOperator" onClick={equalOp}>
+              =
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
